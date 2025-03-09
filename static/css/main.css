@@ -252,3 +252,94 @@ body {
 .text-muted a:hover {
     text-decoration: underline;
 }
+
+body {
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+    background: #2c3e50;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand, .nav-link {
+    color: #ffffff !important;
+}
+
+.nav-link:hover {
+    color: #3498db !important;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    min-height: calc(100vh - 56px); /* Adjust for navbar height */
+}
+
+.profile-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+}
+
+.profile-card h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.user-info {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+}
+
+.ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.ticket-table th, .ticket-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.ticket-table th {
+    background: #3498db;
+    color: white;
+}
+
+.ticket-table tr:hover {
+    background: #f1f1f1;
+}
+
+.btn-primary {
+    background: #3498db;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #2980b9;
+}
+
+.text-muted a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.text-muted a:hover {
+    text-decoration: underline;
+}

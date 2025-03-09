@@ -6,7 +6,7 @@
         <div class="container position-relative">
             <h1 class="display-3 fw-bold mb-3">Welcome to SystemTicketing</h1>
             <p class="lead mb-4">Your Modern Solution for Efficient Issue Tracking</p>
-            <a href="#signup" class="btn btn-light btn-lg">Get Started</a>
+            <a href="{% url 'home:register' %}" class="btn btn-light btn-lg">Get Started</a>
         </div>
     </section>
 
@@ -53,7 +53,7 @@
         <div class="container">
             <h2 class="fw-bold mb-3">Ready to Streamline Your Support?</h2>
             <p class="lead mb-4">Join thousands of satisfied users today</p>
-            <a href="#signup" class="btn btn-primary">Sign Up Now</a>
+            <a href="{% url 'home:register' %}" class="btn btn-primary">Sign Up Now</a>
         </div>
     </section>
 {% endblock %}

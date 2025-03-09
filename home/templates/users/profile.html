@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+
+
+{% block main %}
+
+    <!-- Profile Content -->
+    <div class="content">
+        <div class="profile-card">
+            <h2>My Profile</h2>
+
+            <!-- User Information -->
+            <div class="user-info">
+                <p><strong>Name:</strong> {{ user.first_name|capfirst }} {{ user.last_name }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Member Since:</strong> {{ user.date_joined|timesince }}</p>
+            </div>
+
+            <!-- Tickets Table -->
+            <h3>My Tickets</h3>
+            <table class="ticket-table">
+                <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Subject</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>#001</td>
+                    <td>Login Issue</td>
+                    <td>High</td>
+                    <td>Open</td>
+                    <td><a href="#" class="btn btn-primary btn-sm">View</a></td>
+                </tr>
+                <tr>
+                    <td>#002</td>
+                    <td>Feature Request</td>
+                    <td>Medium</td>
+                    <td>In Progress</td>
+                    <td><a href="#" class="btn btn-primary btn-sm">View</a></td>
+                </tr>
+                <tr>
+                    <td>#003</td>
+                    <td>Payment Error</td>
+                    <td>Urgent</td>
+                    <td>Closed</td>
+                    <td><a href="#" class="btn btn-primary btn-sm">View</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="text-muted text-center mt-3">Need to create a new ticket? <a href="#">Submit a Ticket</a></p>
+        </div>
+    </div>
+
+{% endblock %}

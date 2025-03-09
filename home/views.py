@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import TemplateView, FormView
 
 from .forms import UserLoginForm, UserRegisterForm
@@ -21,7 +22,7 @@ class LoginView(FormView):
         if user is not None:
             login(self.request, user)
             messages.success(self.request, 'You are now logged in.', extra_tags='success')
-            return redirect('home:home')
+            return redirect('home:profile', username=user.username)
         messages.error(self.request, 'Invalid username or password.', extra_tags='danger')
         return redirect('home:login')
 
@@ -35,8 +36,18 @@ class RegisterView(FormView):
                                  email=form.cleaned_data['email'], first_name=form.cleaned_data['first_name'],
                                  last_name=form.cleaned_data['last_name'])
         messages.success(self.request, 'You are now registered.', extra_tags='success')
-        return redirect('home:home')
+        return redirect('home:profile', self.request.user.username)
 
     def form_invalid(self, form):
         messages.error(self.request, form.errors, extra_tags='danger')
         return redirect('home:register')
+
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'users/profile.html'
+    model = User
+
+    def get_context_data(self, **kwargs):
+        contex = super().get_context_data(**kwargs)
+        contex['user'] = get_object_or_404(User, username=self.kwargs['username'])
+        return contex
