@@ -1,9 +1,9 @@
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, View
 
 from .forms import UserLoginForm, UserRegisterForm
 
@@ -47,7 +47,24 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'users/profile.html'
     model = User
 
+
+
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.user_instance = get_object_or_404(User, username=kwargs.get('username'))
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user != self.user_instance:
+            return redirect('home:profile', self.request.user.username)
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         contex = super().get_context_data(**kwargs)
-        contex['user'] = get_object_or_404(User, username=self.kwargs['username'])
+        contex['user'] = self.user_instance
         return contex
+
+
+class LogoutView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('home:home')
