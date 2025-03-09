@@ -36,7 +36,7 @@ class RegisterView(FormView):
                                  email=form.cleaned_data['email'], first_name=form.cleaned_data['first_name'],
                                  last_name=form.cleaned_data['last_name'])
         messages.success(self.request, 'You are now registered.', extra_tags='success')
-        return redirect('home:profile', self.request.user.username)
+        return redirect('home:login')
 
     def form_invalid(self, form):
         messages.error(self.request, form.errors, extra_tags='danger')
@@ -46,8 +46,6 @@ class RegisterView(FormView):
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'users/profile.html'
     model = User
-
-
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
