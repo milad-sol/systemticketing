@@ -72,9 +72,11 @@
             <div class="text-center mt-4">
 
 
-                <button type="button" class="btn btn-danger">
-                    Close Ticket
-                </button>
+                <a href="{% url 'ticket:ticket-close' ticket.id %}">
+                    <button type="button" class="btn btn-danger">
+                        Close Ticket
+                    </button>
+                </a>
 
             </div>
         </div>

@@ -18,6 +18,11 @@ class LoginView(FormView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home:profile', username=request.user.username)
+        return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
         if user is not None:
@@ -31,6 +36,11 @@ class LoginView(FormView):
 class RegisterView(FormView):
     template_name = 'users/register.html'
     form_class = UserRegisterForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home:profile', username=request.user.username)
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         User.objects.create_user(username=form.cleaned_data['username'], password=form.cleaned_data['password'],
@@ -54,7 +64,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user != self.user_instance:
-            return redirect('home:profile', self.request.user.username)
+            return redirect('home:home')
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
