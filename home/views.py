@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import TemplateView, FormView, View
 
+from ticket.models import Ticket
 from .forms import UserLoginForm, UserRegisterForm
 
 
@@ -59,6 +60,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         contex = super().get_context_data(**kwargs)
         contex['user'] = self.user_instance
+        contex['user_ticket'] = Ticket.objects.filter(user=self.user_instance)
+
         return contex
 
 
