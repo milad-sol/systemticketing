@@ -1,52 +1,30 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import View, FormView
-
-from ticket import forms
-from .forms import TicketUpdateForm
-from .models import Ticket
+from django.views.generic import FormView, DetailView, View
+from django.shortcuts import redirect, render
+from .forms import TicketForm
+from .models import Ticket, Messages
 
 
-# Create your views here.
 class TicketDetailView(LoginRequiredMixin, View):
     template_name = 'ticket/ticket-detail.html'
-    form_class = TicketUpdateForm
+    form_class = TicketForm
 
-    def dispatch(self, request, *args, **kwargs):
-        if request.user != self.ticket.user:
-            messages.error(request, 'You are not authorized to view this ticket.', 'danger')
-            return redirect('home:profile', self.request.user.username)
-        return super().dispatch(request, *args, **kwargs)
-
-    def setup(self, request, *args, **kwargs):
-        self.ticket = get_object_or_404(Ticket, id=kwargs['ticket_id'])
-        self.all_ticket = self.ticket.messages.all()
-        super().setup(request, *args, **kwargs)
-
-    def get(self, request, ticket_id):
-        ticket = self.ticket
+    def get(self, request, *args, **kwargs):
         form = self.form_class()
-        return render(request, self.template_name, {'ticket': ticket, 'form': form, 'all_ticket': self.all_ticket})
+        user_ticket = Ticket.objects.get(id=self.kwargs['ticket_id'])
+        return render(request, self.template_name, {'ticket': user_ticket, 'form': form})
 
-    def post(self, request, ticket_id):
-        ticket = self.ticket
-        all_ticket = self.all_ticket
-        form = self.form_class(request.POST)
+    def post(self, request, *args, **kwargs):
+        user_ticket = Ticket.objects.get(id=self.kwargs['ticket_id'])
+        form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
-            new_ticket = form.save(commit=False)
-            new_ticket.ticket = ticket
-            new_ticket.sender = request.user
-            new_ticket.save()
-            messages.success(request, 'Ticket updated successfully', extra_tags='success')
-            return render(request, self.template_name, {'ticket': ticket, 'form': form, 'all_ticket': all_ticket})
-        return render(request, self.template_name, {'ticket': ticket, 'form': form, 'all_ticket': all_ticket})
+            Messages.objects.create(content=form.cleaned_data['content'], sender=self.request.user, ticket=user_ticket,
+                                    file=form.cleaned_data['file'])
+            messages.success(request, 'Message has been sent.', 'success')
+            return redirect('ticket:ticket-detail', ticket_id=user_ticket.id)
+        return render(request, self.template_name, {'ticket': user_ticket, 'form': form})
 
 
 class TicketCreateView(FormView):
-    template_name = 'ticket/create-ticket.html'
-    form_class = forms.TicketForm
-
-    def form_valid(self, form):
-        pass
+    pass

@@ -7,4 +7,5 @@ urlpatterns = [
 
     path('detail/<ticket_id>/', views.TicketDetailView.as_view(), name='ticket-detail'),
     path('create/', views.TicketCreateView.as_view(), name='ticket-create'),
+
 ]

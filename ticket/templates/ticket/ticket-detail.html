@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
-
 {% block main %}
+
 
     <!-- Ticket Detail Content -->
     <div class="content">
@@ -12,8 +12,9 @@
             <div class="ticket-info">
                 <p><strong>Ticket ID:</strong> # {{ ticket.id }}</p>
                 <p><strong>Subject:</strong> {{ ticket.subject }}</p>
+
                 <p><strong>Status:</strong> {{ ticket.status }}</p>
-                <p><strong>Submitted On:</strong> {{ ticket.created_at |timesince }} ago</p>
+                <p><strong>Submitted On:</strong> {{ ticket.created_at|timesince }} ago</p>
             </div>
 
             <!-- User Question -->
@@ -22,71 +23,61 @@
                 <p>
                     {{ ticket.description }}
                 </p>
-                <p><em>Attached File : <a href="{{ ticket.file.url }}">link</a></em></p>
-
+                {% if ticket.file %}
+                    <p><em>Attached File: <a href="{{ ticket.file.url }}">Link</a></em></p>
+                {% endif %}
             </div>
 
-            <!-- Admin Answer -->
-            {% for message in all_ticket %}
+            {% for message in ticket.messages.all %}
                 {% if message.is_admin_response %}
+                    <!-- Admin Answer -->
                     <div class="ticket-section">
                         <h4>Admin Response</h4>
                         <p>
                             {{ message.content }}
                         </p>
-                        {% if  message.file %}
-                            <p><em>Attached File : <a href="{{ message.file.url }}">link</a></em></p>
+                        {% if message.file %}
+                            <p><em>Attached File: <a href="{{ message.file.url }}">Link</a></em></p>
                         {% endif %}
-                        <p><em>Responded on: {{ message.created_at|timesince }} ago </em></p>
+                        <p><em>Responded on: {{ message.created_at|timesince }} ago</em></p>
                     </div>
-
-                {% elif not message.is_admin_response %}
+                {% else %}
                     <div class="ticket-section">
                         <h4>User Question</h4>
                         <p>
-                            {{ ticket.description }}
+                            {{ message.content }}
                         </p>
-                        <p><em>Attached File : <a href="{{ ticket.file.url }}">link</a></em></p>
-
+                        {% if message.file %}
+                            <p><em>Attached File: <a href="{{ message.file.url }}">Link</a></em></p>
+                        {% endif %}
                     </div>
                 {% endif %}
 
-
-
-
             {% endfor %}
+
 
 
             <!-- Follow-Up Response Form -->
             <div class="response-form">
                 <h4>Add a Follow-Up Response</h4>
-                <form action="/ticket/001/response" method="POST" enctype="multipart/form-data">
-                    <div class="form-group mb-4">
-                        <label for="followUpResponse">Your Response</label>
-                        <textarea class="form-control" id="followUpResponse" name="response"
-                                  placeholder="Add additional comments or questions..." required></textarea>
-                    </div>
-                    <div class="form-group mb-4">
-                        <label for="attachment">Attach File</label>
-                        <input type="file" class="custom-file-input" id="attachment" name="attachment">
-                    </div>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
                     <div class="button-group">
                         <button type="submit" class="btn btn-primary">Submit Response</button>
-                        <a href="ticket-detail.html" class="btn btn-secondary">Cancel</a>
+                        <a href="{% url 'home:profile' request.user.username %}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>
-
             <div class="text-center mt-4">
-                <div class="button-group">
-                    <a href="profile.html" class="btn btn-primary">Back to Profile</a>
-                    <button type="button" class="btn btn-danger"
-                            onclick="if(confirm('Are you sure you want to close this ticket?')) { window.location.href='/ticket/001/close'; }">
-                        Close Ticket
-                    </button>
-                </div>
+
+
+                <button type="button" class="btn btn-danger">
+                    Close Ticket
+                </button>
+
             </div>
         </div>
     </div>
-{% endblock %}
 
+{% endblock %}
