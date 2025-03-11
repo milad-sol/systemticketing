@@ -31,7 +31,11 @@
                     <tr>
                         <td>#{{ ticket.id }}</td>
                         <td>{{ ticket.subject }}</td>
-                        <td>{{ ticket.status }}</td>
+                        {% if ticket.status == "Closed" %}
+                            <td class=" text-danger">{{ ticket.status }}</td>
+                        {% else %}
+                            <td class="text-success">{{ ticket.status }}</td>
+                        {% endif %}
                         <td>
                             <a href="{{ ticket.get_absolute_url }}" class="btn btn-primary btn-sm">View</a>
                         </td>

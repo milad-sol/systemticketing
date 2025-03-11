@@ -40,5 +40,29 @@ class TicketCreateView(FormView):
     pass
 
 
-class TicketCloseView(TemplateView):
-    pass
+class TicketCloseView(LoginRequiredMixin, View):
+    template_name = 'ticket/close-ticket.html'
+
+    def get(self, request, *args, **kwargs):
+        ticket = Ticket.objects.get(id=kwargs['ticket_id'])
+        return render(request, self.template_name, {'ticket': ticket})
+
+    def post(self, request, *args, **kwargs):
+        ticket = Ticket.objects.get(id=kwargs['ticket_id'])
+        ticket.status = "Closed"
+        ticket.save()
+        return redirect('home:profile', username=request.user.username)
+
+
+class TicketOpenView(LoginRequiredMixin, View):
+    template_name = 'ticket/open-ticket.html'
+
+    def get(self, request, *args, **kwargs):
+        ticket = Ticket.objects.get(id=kwargs['ticket_id'])
+        return render(request, self.template_name, {'ticket': ticket})
+
+    def post(self, request, *args, **kwargs):
+        ticket = Ticket.objects.get(id=kwargs['ticket_id'])
+        ticket.status = "Open"
+        ticket.save()
+        return redirect('ticket:ticket-detail', ticket_id=ticket.id)

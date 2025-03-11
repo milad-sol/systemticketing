@@ -13,7 +13,11 @@
                 <p><strong>Ticket ID:</strong> # {{ ticket.id }}</p>
                 <p><strong>Subject:</strong> {{ ticket.subject }}</p>
 
-                <p><strong>Status:</strong> {{ ticket.status }}</p>
+                <p><strong>Status:</strong> {% if ticket.status == 'Closed' %}
+                    <span class="text-danger">{{ ticket.status }}</span>
+                {% else %}
+                    <span class="text-success">{{ ticket.status }}</span>
+                {% endif %} </p>
                 <p><strong>Submitted On:</strong> {{ ticket.created_at|timesince }} ago</p>
             </div>
 
@@ -58,27 +62,39 @@
 
 
             <!-- Follow-Up Response Form -->
-            <div class="response-form">
-                <h4>Add a Follow-Up Response</h4>
-                <form action="" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <div class="button-group">
-                        <button type="submit" class="btn btn-primary">Submit Response</button>
-                        <a href="{% url 'home:profile' request.user.username %}" class="btn btn-secondary">Cancel</a>
-                    </div>
-                </form>
-            </div>
-            <div class="text-center mt-4">
+            {% if not ticket.status == "Closed" %}
+                <div class="response-form">
+                    <h4>Add a Follow-Up Response</h4>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="button-group">
+                            <button type="submit" class="btn btn-primary">Submit Response</button>
+                            <a href="{% url 'home:profile' request.user.username %}"
+                               class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
 
+                <div class="text-center mt-4">
+                    <a href="{% url 'ticket:ticket-close' ticket.id %}">
+                        <button type="button" class="btn btn-danger">
+                            Close Ticket
+                        </button>
+                    </a>
+                </div>
 
-                <a href="{% url 'ticket:ticket-close' ticket.id %}">
-                    <button type="button" class="btn btn-danger">
-                        Close Ticket
-                    </button>
-                </a>
+            {% else %}
+                <div class="text-center mt-4">
+                    <a href="{% url 'ticket:ticket-open' ticket.id %}">
+                        <button type="button" class="btn btn-success">
+                            Open Ticket
+                        </button>
+                    </a>
 
-            </div>
+                </div>
+            {% endif %}
+
         </div>
     </div>
 
