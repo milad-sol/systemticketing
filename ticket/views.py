@@ -2,13 +2,13 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView, DetailView, View, TemplateView
 from django.shortcuts import redirect, render
-from .forms import TicketForm
+from .forms import MessageForm, CreateTicketForm
 from .models import Ticket, Messages
 
 
 class TicketDetailView(LoginRequiredMixin, View):
     template_name = 'ticket/ticket-detail.html'
-    form_class = TicketForm
+    form_class = MessageForm
 
     def setup(self, request, *args, **kwargs):
         self.user_ticket = Ticket.objects.get(id=kwargs['ticket_id'])
@@ -36,8 +36,17 @@ class TicketDetailView(LoginRequiredMixin, View):
         return render(request, self.template_name, {'ticket': user_ticket, 'form': form})
 
 
-class TicketCreateView(FormView):
-    pass
+class TicketCreateView(LoginRequiredMixin, FormView):
+    template_name = 'ticket/create-ticket.html'
+    form_class = CreateTicketForm
+    model = Ticket
+
+    def form_valid(self, form):
+        new_ticket = form.save(commit=False)
+        new_ticket.user = self.request.user
+        new_ticket.save()
+        messages.success(self.request, 'Ticket has been created.', 'success')
+        return redirect('ticket:ticket-detail', ticket_id=new_ticket.id)
 
 
 class TicketCloseView(LoginRequiredMixin, View):

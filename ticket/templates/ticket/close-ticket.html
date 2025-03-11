@@ -5,33 +5,36 @@
 
 
     <!-- Close Ticket Content -->
-    <div class="content">
-        <div class="close-ticket-card">
-            <h2>Close Ticket</h2>
 
-            <!-- Ticket Information -->
-            <div class="ticket-info">
-                <p><strong>Ticket ID:</strong> # {{ ticket.id }}</p>
-                <p><strong>Subject:</strong> {{ ticket.subject }}</p>
-                <p><strong>Status:</strong> {{ ticket.status }}</p>
-                <p><strong>Submitted On:</strong> {{ ticket.created_at|timesince }} ago</p>
-            </div>
+        <div class="content">
+            <div class="close-ticket-card">
+                <h2>Close Ticket</h2>
 
-            <!-- Close Ticket Form -->
-            <div class="close-form">
-                <h4>Closing Confirmation</h4>
-                <form action="{% url 'ticket:ticket-close' ticket.id %}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group mb-4">
-                        <div class="button-group">
-                            <input type="submit" class="btn btn-danger" value="Close Ticket">
-                            <a href="{% url 'ticket:ticket-detail' ticket.id %}" class="btn btn-secondary">Cancel</a>
+                <!-- Ticket Information -->
+                <div class="ticket-info">
+                    <p><strong>Ticket ID:</strong> # {{ ticket.id }}</p>
+                    <p><strong>Subject:</strong> {{ ticket.subject }}</p>
+                    <p><strong>Status:</strong> {{ ticket.status }}</p>
+                    <p><strong>Submitted On:</strong> {{ ticket.created_at|timesince }} ago</p>
+                </div>
+
+                <!-- Close Ticket Form -->
+                <div class="close-form">
+                    <h4>Closing Confirmation</h4>
+                    <form action="{% url 'ticket:ticket-close' ticket.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group mb-4">
+                            <div class="button-group">
+                                <input type="submit" class="btn btn-danger" value="Close Ticket">
+                                <a href="{% url 'ticket:ticket-detail' ticket.id %}"
+                                   class="btn btn-secondary">Cancel</a>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+
 
 
 {% endblock %}

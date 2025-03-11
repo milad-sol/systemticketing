@@ -4,7 +4,7 @@
 {% block main %}
 
 
-    <!-- Close Ticket Content -->
+    <!-- open Ticket Content -->
     <div class="content">
         <div class="close-ticket-card">
             <h2>Open Ticket</h2>
@@ -17,7 +17,7 @@
                 <p><strong>Submitted On:</strong> {{ ticket.created_at|timesince }} ago</p>
             </div>
 
-            <!-- Close Ticket Form -->
+            <!-- open Ticket Form -->
             <div class="close-form">
                 <h4>Opening Confirmation</h4>
                 <form action="{% url 'ticket:ticket-open' ticket.id %}" method="POST">
