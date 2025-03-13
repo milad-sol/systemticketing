@@ -81,11 +81,17 @@ class LogoutView(LoginRequiredMixin, View):
         return redirect('home:home')
 
 
-class AdminView(TemplateView):
+class AdminView(LoginRequiredMixin, TemplateView):
     template_name = 'users/admin-dashboard.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff :
+            messages.error(request, 'Just admin can see this page.', extra_tags='danger')
+            return redirect('home:home')
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         ticket = Ticket.objects.all()
         context['tickets'] = ticket
         context['open_tickets'] = ticket.filter(status='Open')

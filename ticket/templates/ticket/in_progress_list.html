@@ -1,10 +1,13 @@
 {% extends 'main.html' %}
+{% block title %}
+	In Progress Tickets Lists
+{% endblock %}
 {% block main %}
     <div class="content">
         <div class="open-tickets-card">
             <h2>In Progress Tickets</h2>
 
-            <!-- Open Tickets Table -->
+
             <table class="ticket-table">
                 <thead>
                 <tr>
@@ -15,36 +18,32 @@
                 </tr>
                 </thead>
                 <tbody>
-
-                <tr>
-                    {% for list in in_progress_list %}
+                {% for list in in_progress_list %}
+                    <tr>
                         <td># {{ list.id }}</td>
                         <td>{{ list.subject }}</td>
-
                         <td>{{ list.created_at |timesince }} ago</td>
                         <td>
-
                             <div class="button-group">
                                 <a href="{{ list.get_absolute_url }}" class="btn btn-primary btn-sm">View</a>
+
                             </div>
                         </td>
+                        {% empty %}
                         <td>
-                            {% empty %}
+                            <div>
 
-                        <td><h6>There are no tickets yet.</h6></td>
-
-
-                    {% endfor %}
-
-                </tr>
+                                <h6 class="text-muted">there are no ticket yet!</h6>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
 
 
                 </tbody>
             </table>
-
         </div>
     </div>
 
-
 {% endblock %}
-<!-- Open Tickets Content -->
+
