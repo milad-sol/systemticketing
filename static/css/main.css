@@ -1864,3 +1864,330 @@ textarea.form-control {
         transform: rotate(360deg);
     }
 }
+
+:root {
+    --primary-color: #4e73df;
+    --secondary-color: #1cc88a;
+    --dark-color: #2c3e50;
+    --danger-color: #e74c3c;
+    --accent-gradient: linear-gradient(90deg, #6c757d, #343a40);
+}
+
+body {
+    background: linear-gradient(135deg, #f0f4f8 0%, #b3c0d1 100%);
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.navbar {
+    background: var(--dark-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-brand, .nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+    transform: scale(1.1);
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.admin-dashboard-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 900px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border: 1px solid rgba(78, 115, 223, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-dashboard-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(78, 115, 223, 0.1) 0%, transparent 70%);
+    z-index: 0;
+    animation: rotate 15s linear infinite;
+}
+
+.admin-dashboard-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.admin-dashboard-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.admin-dashboard-card h2 {
+    color: var(--dark-color);
+    margin-bottom: 2.5rem;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    letter-spacing: 1.5px;
+}
+
+.summary-card {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin-bottom: 2.5rem;
+    border-left: 5px solid var(--primary-color);
+    text-align: center;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card h4 {
+    color: #34495e;
+    margin-bottom: 0.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.summary-card p {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.status-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 2rem;
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.status-table th, .status-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #e9ecef;
+    transition: background 0.3s ease;
+}
+
+.status-table th {
+    background: var(--primary-color);
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-table tr:hover {
+    background: #f1f3f5;
+}
+
+.status-table tr:last-child td {
+    border-bottom: none;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    transition: all 0.4s ease;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+ :root {
+            --primary-color: #4e73df;
+            --secondary-color: #1cc88a;
+            --dark-color: #2c3e50;
+            --danger-color: #e74c3c;
+            --accent-gradient: linear-gradient(90deg, #6c757d, #343a40);
+        }
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #b3c0d1 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        .navbar {
+            background: var(--dark-color);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .navbar-brand, .nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: scale(1.1);
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 50px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .open-tickets-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 1000px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 1px solid rgba(78, 115, 223, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .open-tickets-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(78, 115, 223, 0.1) 0%, transparent 70%);
+            z-index: 0;
+            animation: rotate 15s linear infinite;
+        }
+        .open-tickets-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+        .open-tickets-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        .open-tickets-card h2 {
+            color: var(--dark-color);
+            margin-bottom: 2.5rem;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            letter-spacing: 1.5px;
+        }
+        .ticket-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 2rem;
+            background: #ffffff;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .ticket-table th, .ticket-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+            transition: background 0.3s ease;
+        }
+        .ticket-table th {
+            background: var(--primary-color);
+            color: #ffffff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .ticket-table tr:hover {
+            background: #f1f3f5;
+        }
+        .ticket-table tr:last-child td {
+            border-bottom: none;
+        }
+        .btn-primary {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 25px;
+            padding: 8px 15px;
+            transition: all 0.4s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        .btn-danger {
+            background: var(--danger-color);
+            border: none;
+            border-radius: 25px;
+            padding: 8px 15px;
+            transition: all 0.4s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .btn-danger:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+.close-ticket-table th {
+            background: var(--primary-color);
+            color: #ff0000;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }

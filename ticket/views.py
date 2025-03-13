@@ -15,12 +15,20 @@ class TicketDetailView(LoginRequiredMixin, View):
         super().setup(request, *args, **kwargs)
 
     def dispatch(self, request, *args, **kwargs):
+
         if request.user != self.user_ticket.user:
             messages.error(request, 'You are not authorized to view this ticket.', 'danger')
             return redirect('home:profile', username=request.user.username)
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
+        """
+
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         form = self.form_class()
         user_ticket = self.user_ticket
         return render(request, self.template_name, {'ticket': user_ticket, 'form': form})
@@ -75,3 +83,47 @@ class TicketOpenView(LoginRequiredMixin, View):
         ticket.status = "Open"
         ticket.save()
         return redirect('ticket:ticket-detail', ticket_id=ticket.id)
+
+
+class TicketOpenListView(LoginRequiredMixin, TemplateView):
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            return redirect('home:home')
+        return super().dispatch(request, *args, **kwargs)
+
+    template_name = 'ticket/open_tickets_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['open_list'] = Ticket.objects.filter(status="Open")
+        return context
+
+
+class TicketInProgressListView(TemplateView):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            return redirect('home:home')
+        return super().dispatch(request, *args, **kwargs)
+
+    template_name = 'ticket/in_progress_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['in_progress_list'] = Ticket.objects.filter(status="In Progress")
+        return context
+
+
+class TicketCloseListView(TemplateView):
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            return redirect('home:home')
+        return super().dispatch(request, *args, **kwargs)
+
+    template_name = 'ticket/close_list_tickets.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['close_list'] = Ticket.objects.filter(status="Closed")
+        return context

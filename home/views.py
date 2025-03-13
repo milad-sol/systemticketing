@@ -79,3 +79,16 @@ class LogoutView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         logout(request)
         return redirect('home:home')
+
+
+class AdminView(TemplateView):
+    template_name = 'users/admin-dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        ticket = Ticket.objects.all()
+        context['tickets'] = ticket
+        context['open_tickets'] = ticket.filter(status='Open')
+        context['in_progress_tickets'] = ticket.filter(status='In Progress')
+        context['closed_tickets'] = ticket.filter(status='Closed')
+        return context

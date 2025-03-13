@@ -1,0 +1,77 @@
+{% extends 'main.html' %}
+{% block main %}
+    <div class="content">
+        <div class="admin-dashboard-card">
+            <h2>Admin Dashboard</h2>
+
+            <!-- Ticket Summary -->
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <div class="summary-card">
+                        <h4>Total Tickets</h4>
+                        <p>{{ tickets|length }}</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="summary-card" style="border-left: 5px solid var(--secondary-color);">
+                        <h4>Open Tickets</h4>
+                        <p>{{ open_tickets|length }}</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="summary-card" style="border-left: 5px solid #ff9800;"> <!-- Orange for In Progress -->
+                        <h4>In Progress Tickets</h4>
+                        <p>{{ in_progress_tickets |length }}</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="summary-card" style="border-left: 5px solid #28a745;">
+                        <h4>Closed Tickets</h4>
+                        <p>{{ closed_tickets|length }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ticket Status Table -->
+            <h3 style="color: #34495e; text-align: center; margin-bottom: 2rem; font-size: 1.5rem; font-weight: 600;">
+                Ticket Status Overview</h3>
+            <table class="status-table">
+                <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Count</th>
+
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Open</td>
+
+
+                    <td>{{ open_tickets|length }}</td>
+
+                    <td><a href="{% url 'ticket:ticket-open-lists' %}" class="btn btn-primary btn-sm">View</a></td>
+                </tr>
+                <tr>
+                    <td>In Progress</td>
+
+
+                    <td>{{ in_progress_tickets|length }}</td>
+
+                    <td><a href="{% url 'ticket:ticket-in-progress-lists' %}" class="btn btn-primary btn-sm">View</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Closed</td>
+                    <td>{{ closed_tickets|length }}</td>
+
+
+                    <td><a href="{% url 'ticket:ticket-close-lists' %}" class="btn btn-primary btn-sm">View</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

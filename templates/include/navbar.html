@@ -13,9 +13,15 @@
                 </li>
                 {% if request.user.is_authenticated %}
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home:profile' request.user.username %}">Profile</a>
-                    </li>
+                    {% if not request.user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home:profile' request.user.username %}">Profile</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home:admin' %}">Admin Dashboard</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'ticket:ticket-create' %}">Create Ticket</a>
                     </li>
