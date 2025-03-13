@@ -20,6 +20,8 @@ class LoginView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
+            return redirect('home:admin')
+        elif request.user.is_authenticated:
             return redirect('home:profile', username=request.user.username)
         return super().dispatch(request, *args, **kwargs)
 
