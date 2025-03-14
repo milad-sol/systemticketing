@@ -20,9 +20,7 @@ class LoginView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('home:admin')
-        elif request.user.is_authenticated:
-            return redirect('home:profile', username=request.user.username)
+            return redirect('home:home')
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -30,7 +28,10 @@ class LoginView(FormView):
         if user is not None:
             login(self.request, user)
             messages.success(self.request, 'You are now logged in.', extra_tags='success')
-            return redirect('home:profile', username=user.username)
+            if self.request.user.is_staff:
+                return redirect('home:admin')
+            else:
+                return redirect('home:profile', username=user.username)
         messages.error(self.request, 'Invalid username or password.', extra_tags='danger')
         return redirect('home:login')
 
@@ -80,6 +81,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 class LogoutView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         logout(request)
+        messages.success(request, 'You are now logged out.', extra_tags='success')
         return redirect('home:home')
 
 
@@ -87,7 +89,7 @@ class AdminView(LoginRequiredMixin, TemplateView):
     template_name = 'users/admin-dashboard.html'
 
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_staff :
+        if not request.user.is_staff:
             messages.error(request, 'Just admin can see this page.', extra_tags='danger')
             return redirect('home:home')
         return super().dispatch(request, *args, **kwargs)

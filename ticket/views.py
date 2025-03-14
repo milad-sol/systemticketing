@@ -51,6 +51,7 @@ class TicketCreateView(LoginRequiredMixin, FormView):
         if not request.user.is_authenticated:
             messages.error(request, 'You do not have an account.First you should create an account', 'danger')
             return redirect('home:register')
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         new_ticket = form.save(commit=False)

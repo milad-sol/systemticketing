@@ -14,6 +14,7 @@
                     <th>Ticket ID</th>
                     <th>Subject</th>
                     <th>Submitted On</th>
+                    <th>Owner</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -23,6 +24,7 @@
                         <td># {{ list.id }}</td>
                         <td>{{ list.subject }}</td>
                         <td>{{ list.created_at |timesince }} ago</td>
+                        <td>{{ list.user.username|capfirst }}</td>
                         <td>
                             <div class="button-group">
                                 <a href="{{ list.get_absolute_url }}" class="btn btn-primary btn-sm">View</a>
